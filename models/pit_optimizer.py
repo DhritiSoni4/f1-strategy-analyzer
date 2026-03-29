@@ -1,18 +1,23 @@
 import numpy as np
 
 def compute_total_time(pit_lap, total_laps, deg_rate, gap_behind, pit_loss=20):
-    # Before pit
+    
+    # Before pit (degrading tire)
     laps_before = pit_lap
     loss_before = deg_rate * (laps_before * (laps_before + 1) / 2)
 
-    # After pit
+    # After pit (fresh tire → slower degradation effect)
     laps_after = total_laps - pit_lap
-    loss_after = deg_rate * (laps_after * (laps_after + 1) / 2)
+    
+    # 🔥 KEY FIX: fresh tires are faster (reduce degradation effect)
+    fresh_deg_rate = deg_rate * 0.6  # assume 40% better performance
+    
+    loss_after = fresh_deg_rate * (laps_after * (laps_after + 1) / 2)
 
     # Traffic penalty
     traffic_penalty = 0
     if gap_behind < pit_loss:
-        traffic_penalty = 5  # simple constant penalty
+        traffic_penalty = 5
 
     return loss_before + pit_loss + loss_after + traffic_penalty
 

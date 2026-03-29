@@ -10,7 +10,7 @@ def fit_tire_degradation(laps, lap_times):
     lap_times = np.array(lap_times)
 
     # Normalize lap times (important)
-    lap_times = lap_times - np.min(lap_times)
+    lap_times = lap_times - lap_times[0]
 
     # Fit curve
     params, _ = curve_fit(degradation_model, laps, lap_times)
@@ -18,7 +18,7 @@ def fit_tire_degradation(laps, lap_times):
     a, b = params
 
     return {
-        "deg_rate": float(a),
+        "deg_rate": float(abs(a)),
         "baseline": float(b)
     }
 
