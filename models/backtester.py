@@ -49,9 +49,18 @@ def evaluate_race(year, race, driver_code='VER'):
     total_laps = int(race_total_laps - current_lap)
 
     # Predict
-    pred = find_optimal_pit(total_laps, deg_rate, gap_behind=20)
+    max_future_laps = min(total_laps, 20)  # 🔥 critical constraint
+
+    pred = find_optimal_pit(max_future_laps, deg_rate, gap_behind=10)
+    print("FULL PRED OBJECT:", pred)
+    print("TYPE:", type(pred))
+    print("OPTIMAL LAP VALUE:", pred["optimal_pit_lap"])
+    print("CURRENT LAP:", current_lap)
+
     predicted_lap = current_lap + pred["optimal_pit_lap"]
 
+    print("CALCULATION:", current_lap, "+", pred["optimal_pit_lap"], "=", predicted_lap)
+    print("Computed predicted:", current_lap, "+", pred["optimal_pit_lap"])
     
     # Actual
     actual_lap = get_actual_pit_lap(laps)
