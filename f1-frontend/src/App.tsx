@@ -9,7 +9,7 @@ function App() {
 
       {/* Main Area */}
       <div style={{ flex: 1, padding: "20px" }}>
-        <h1>F1 Strategy Dashboard</h1>
+        <h1>F1 Strategy Dashboard to analyze the F1 DRIVERS</h1>
       </div>
 
     </div>
